@@ -1,0 +1,14 @@
+N,C;d;D;e;E;F;g;G;a;A;b;B
+I,guitar
+I,ukulele
+I,violin
+T,guitar,std,0;7;3;10;5;0
+T,guitar,dadgad,0;7;5;0;7;0
+H,S,major,0;2;4;5;7;9;11
+H,S,minor,0;2;3;5;7;8;10
+H,S,harmonicminor,0;2;3;5;7;8;11
+H,S,melodicminor,0;2;3;5;7;9;10
+H,C,maj7,0;4;7;11
+H,C,dom7,0;4;7;10
+H,C,min7,0;3;7;10
+H,C,m7b5,0;3;6;10

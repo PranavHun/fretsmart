@@ -1,0 +1,63 @@
+* DATABASE
+** NOTE_SYSTEMS (eg: Western, Indian, etc.)
+*** +NOTE_SYSTEM_ID
+*** NAME
+*** DESCRIPTION
+** NOTES (Name, Alt Name => "C#" / "Db")
+*** +NOTE_SYSTEM_ID
+*** +SEQ
+*** NAME
+*** ALT_NAME
+** INSTRUMENTS (eg: Guitar, Ukulele,7-String Guitar etc.)
+*** +INSTRUMENT_ID
+*** NAME
+*** DESCRIPTION
+*** FRETS
+** FORMULA_TYPES (Formula Type = S => Scale, T => Tuning, F=> Formula, R => Raag, A => Avaroh etc.
+*** +FORMULA_TYPE_ID
+*** FORMULA_TYPE
+*** DESCRIPTION
+** FORMULAS
+*** +FORMULA_ID
+*** FORMULA_TYPE_ID
+*** FORMULA_NAME
+** FORMULA_NOTES NOTE_NUMBER modulus of total Notes in Note System.
+*** +FORMULA_ID
+*** +SEQ
+*** NOTE_NUMBER
+* VIEW
+** Show fretboard based on
+*** Sequence of Notes: array of tuple (strings, highlight number (-1 is no show, 0 is no highlight, 1, 2...)
+*** Formula Notes: array of strings
+*** Number of Frets: usize
+* LOGIC
+** Inputs
+*** Note System
+*** Instrument
+*** Tuning
+*** Tuning Note
+*** Highlights
+**** Highlight Type
+**** Highlight Name
+**** Highlight Note
+** Data Base selection
+*** Note System
+**** SELECT NOTE_SYSTEM_ID FROM NOTE_SYSTEMS WHERE NAME=Note System
+*** Instrument
+**** SELECT INSTRUMENT_ID, FRETS FROM INSTRUMENTS where NAME = Instrument
+*** Tuning
+**** SELECT FORMULA_TYPE_ID FROM FORMULA_TYPES WHERE FORMULA_TYPE='T'
+**** SELECT FORMULA_ID FROM FORMULAS WHERE FORMULA_TYPE_ID=$FORMULA_TYPE_ID and FORMULA_NAME=Tuning
+**** tuning_formula=SELECT NOTE_NUMBER FROM FORMULA_NOTES WHERE FORMULA_ID=$FORMULA_ID ORDER BY SEQ
+**** tuning_note_idx = SELECT SEQ FROM NOTES WHERE NOTE_SYSTEM_ID=$NOTE_SYSTEM_ID AND NAME=$Tuning_Note
+*** Highlight
+**** SELECT FORMULA_TYPE_ID FROM FORMULA_TYPES WHERE FORMULA_TYPE=Highlight_Type
+**** SELECT FORMULA_ID FROM FORMULAS WHERE FORMULA_TYPE_ID=$FORMULA_TYPE_ID and FORMULA_NAME=Highlight Name
+**** highlight_formula=SELECT NOTE_NUMBER FROM FORMULA_NOTES WHERE FORMULA_ID=$FORMULA_ID ORDER BY SEQ
+**** highlight_note_idx = SELECT SEQ FROM NOTES WHERE NOTE_SYSTEM_ID=$NOTE_SYSTEM_ID AND NAME=highlight note
+*** all_notes=SELECT NAME, ALT_NAME FROM NOTES WHERE NOTE_SYSTEM_ID=$NOTE_SYSTEM_ID ORDER BY SEQ
+** tuning_notes = all_notes[tuning_formula:array + tuninging_note_idx]
+** sequence of notes = zip(all_notes, 0)
+** Highlights
+*** sequence of notes [highlight_formula:array + highlight_note_idx] + 1
+

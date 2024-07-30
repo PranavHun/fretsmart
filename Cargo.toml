@@ -1,0 +1,6 @@
+[package]
+name = "fretsmart"
+description = "A tool to sharpen your knowledge of musical string instrument fretboard"
+readme = "README.md"
+version = "0.1.0"
+edition = "2021"
